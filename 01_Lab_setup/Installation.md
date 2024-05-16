@@ -32,3 +32,12 @@ choco install azure-cli
 ```
 choco install bicep
 ```
+
+**All in One**  
+```
+choco install powershell-core -y
+choco install azure-cli -y
+choco install bicep -y
+choco install vscode -y
+choco install git -y
+```
