@@ -13,3 +13,6 @@ az group create -n 'gha-arm-rg' -l 'switzerlandnorth'
 
 #Deploy an ARM Template
 az deployment group create --name "firstdeploy" --resource-group 'gha-arm-rg' -f 04_The_first_samples\storage.json -c
+
+#Create a service principal
+az ad sp create-for-rbac --name "GitHubActions" --role contributor --scopes /subscriptions/31ca7da3-d37d-4f76-a5b7-6ede27d1c8fe --json-auth
