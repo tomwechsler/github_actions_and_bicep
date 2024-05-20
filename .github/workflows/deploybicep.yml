@@ -32,3 +32,11 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           # ClientId of the Azure Service principal created.
           enable-AzPSSession: true
+
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v2
+        with:
+            # Specify the Az PowerShell script here.
+            inlineScript: New-AzResourceGroup -Name "gha-workflow-rg" -location "switzerlandnorth" -Force
+            # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+            azPSVersion: latest
