@@ -51,5 +51,5 @@ jobs:
           # Specify the path or URL to the Azure Resource Manager template.
           template: ./04_The_first_samples/storage.bicep
           # Supply deployment paramater values.
-          paramaters: storageAccountPrefix=ghatw
+          parameters: storageAccountPrefix=ghatw
           
