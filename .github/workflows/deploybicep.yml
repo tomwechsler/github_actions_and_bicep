@@ -36,7 +36,7 @@ jobs:
           # ClientId of the Azure Service principal created.
           enable-AzPSSession: true
 
-      - name: Azure PowerShell Action
+      - name: Create a Resource Group in Azure
         uses: Azure/powershell@v2
         with:
             # Specify the Az PowerShell script here.
@@ -44,7 +44,7 @@ jobs:
             # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
             azPSVersion: latest
 
-      - name: Deploy Azure Resource Manager (ARM) Template
+      - name: Deploy Bicep File
         uses: Azure/arm-deploy@v2
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'tenant', 'managementgroup', 'subscription'
