@@ -44,6 +44,14 @@ jobs:
             # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
             azPSVersion: latest
 
+      - name: Perform what-if test
+        uses: Azure/powershell@v2
+        with:
+            # Specify the Az PowerShell script here.
+            inlineScript: New-AzResourceGroupDeployment -ResourceGroupName ${{ env.resourceGroupName }} -Templatefile ./04_The_first_samples/storage.bicep -Whatif
+            # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+            azPSVersion: latest
+
       - name: Deploy Bicep File
         uses: Azure/arm-deploy@v2
         with:
