@@ -1,4 +1,3 @@
-# This is a basic workflow to help you get started with Actions
 
 name: Deploy to Azure
 
@@ -13,13 +12,15 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Define environment parameters
 env:
-  resourceGroupName: "gha-workflow-rg"
+  ENVIRONMENT_TYPE: Test
+  REGION: switzerlandnorth
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # This workflow contains a single job called "lint"
+  lint:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -27,41 +28,5 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
-      - name: Azure Login
-        uses: Azure/login@v2.1.0
-        with:
-          # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          # ClientId of the Azure Service principal created.
-          enable-AzPSSession: true
-
-      - name: Create a Resource Group in Azure
-        uses: Azure/powershell@v2
-        with:
-            # Specify the Az PowerShell script here.
-            inlineScript: New-AzResourceGroup -Name ${{ env.resourceGroupName }} -location "switzerlandnorth" -Force
-            # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
-            azPSVersion: latest
-
-      - name: Perform what-if test
-        uses: Azure/powershell@v2
-        with:
-            # Specify the Az PowerShell script here.
-            inlineScript: New-AzResourceGroupDeployment -ResourceGroupName ${{ env.resourceGroupName }} -Templatefile ./04_The_first_samples/storage.bicep -Whatif
-            # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
-            azPSVersion: latest
-
-      - name: Deploy Bicep File
-        uses: Azure/arm-deploy@v2
-        with:
-          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'tenant', 'managementgroup', 'subscription'
-          scope: resourcegroup
-          # Provide the name of a resource group, only required for resource Group deployments.
-          resourceGroupName: ${{ env.resourceGroupName }}
-          # Specify the path or URL to the Azure Resource Manager template.
-          template: ./04_The_first_samples/storage.bicep
-          # Supply deployment paramater values.
-          parameters: storageAccountPrefix=ghatw
-          deploymentName: "gha${{ github.run_id }}"
-          
+      - name: Lint the Bicep Code
+        run: az bicep build --file ./06_multi_deployment/main.bicep

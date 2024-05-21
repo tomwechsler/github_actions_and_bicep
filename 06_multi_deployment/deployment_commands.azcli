@@ -1,0 +1,15 @@
+#Login to Azure
+az login
+az account show --query name
+
+#Set primary subscription if you have multiple
+az account set --subscription "Your subscription name"
+
+#List all RG names
+az group list -o table
+
+#Deploy into subscription - What-If
+az deployment sub create -l 'switzerlandnorth' -f ./06_multi_deployment/main.bicep -c
+
+#Create a .json file
+az bicep build --file ./06_multi_deployment/main.bicep
