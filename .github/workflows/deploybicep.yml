@@ -28,4 +28,23 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
       - name: Lint the Bicep Code
-        run: az bicep build --file ./06_multi_deployment/main.bicep         
+        run: az bicep build --file ./06_multi_deployment/main.bicep
+
+  validate:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Azure/login@v2.1.0
+        name: Sign in to Azure
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: Azure/arm-deploy@v2
+        name: Run preflight validation
+        with:
+          scope: subscription
+          region: ${{ env.REGION }}
+          deploymentName: ${{ github.run_number }}
+          template: ./06_multi_deployment/main.bicep
+          parameters: azureRegion=${{ env.REGION }}
+          deploymentMode: Validate
