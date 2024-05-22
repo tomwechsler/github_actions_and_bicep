@@ -1,5 +1,8 @@
 # Some links compiled!
 
+**Chocolatey Paket Manager**  
+https://chocolatey.org/install
+
 **What is Bicep?**  
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep
 
