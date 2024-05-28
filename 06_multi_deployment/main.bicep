@@ -32,7 +32,6 @@ module storageServices 'modules/storage.bicep' = {
   name: 'stgDeployment-${uniqueString(cttresourceGroup.id)}'
   params: {
     azureRegion: azureRegion
-    accountNamePrefix: 'ctt001'
     projectNameTag: projectNameTag
     projectEnvTag: projectEnvTag
   }

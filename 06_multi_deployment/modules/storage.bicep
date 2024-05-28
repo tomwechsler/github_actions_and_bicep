@@ -2,23 +2,23 @@
 param azureRegion string = resourceGroup().location
 
 @minLength(3)
-@maxLength(11)
-param accountNamePrefix string = 'ctt001'
+@maxLength(32)
+param accountNamePrefix string = 'uniqueString(resourceGroup().id)'
 
 param projectNameTag string
 param projectEnvTag string
 
 param storageConfig object = {
   marketing: {
-    name: '${accountNamePrefix}markting'
+    name: '${accountNamePrefix}mkt'
     skuName: 'Standard_LRS'
   }
   accounting: {
-    name: '${accountNamePrefix}accounting'
+    name: '${accountNamePrefix}acc'
     skuName: 'Premium_LRS'
   }
   itoperations: {
-    name: '${accountNamePrefix}itoperations'
+    name: '${accountNamePrefix}itops'
     skuName: 'Premium_LRS'
   }
 }
