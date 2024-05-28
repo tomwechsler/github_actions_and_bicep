@@ -49,7 +49,7 @@ jobs:
           parameters: azureRegion=${{ env.REGION }}
           deploymentMode: Validate
   
-  deploy:
+  QA:
     runs-on: ubuntu-latest
     needs: [lint, validate]
     steps:
@@ -67,3 +67,27 @@ jobs:
           deploymentName: ${{ github.run_number }}
           template: ./06_multi_deployment/main.bicep
           parameters: azureRegion=${{ env.REGION }}
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [lint, validate, QA]
+    env:
+      AZUREREGION: westeurope
+    environment:
+      name: Production
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Azure/login@v2.1.0
+        name: Sign in to Azure
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: Azure/arm-deploy@v2
+        name: Deploy Resources to Azure
+        with:
+          failOnStdErr: false
+          scope: subscription
+          region: ${{ env.REGION }}
+          deploymentName: ${{ github.run_number }}
+          template: ./06_multi_deployment/main.bicep
+          parameters: azureRegion=${{ env.AZUREREGION }}
