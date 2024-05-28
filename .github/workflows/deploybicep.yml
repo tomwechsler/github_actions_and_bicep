@@ -90,5 +90,5 @@ jobs:
           scope: subscription
           region: ${{ env.REGION }}
           deploymentName: ${{ github.run_number }}
-          template: ./06_multi_deployment/main.bicep
+          template: ./06_multi_deployment/main-prod.bicep
           parameters: azureRegion=${{ env.AZUREREGION }}
