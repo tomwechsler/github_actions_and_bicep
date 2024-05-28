@@ -4,6 +4,7 @@ param azureRegion string = 'switzerlandnorth'
 param resourceGroupName string = 'ctt-rg-${azureRegion}'
 param projectNameTag string = 'Production'
 param projectEnvTag string = 'DevOps'
+param accountNamePrefix string = 'ctt001'
 
 resource cttresourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: resourceGroupName
@@ -32,7 +33,7 @@ module storageServices 'modules/storage.bicep' = {
   name: 'stgDeployment-${uniqueString(cttresourceGroup.id)}'
   params: {
     azureRegion: azureRegion
-    accountNamePrefix: 'ctt001'
+    accountNamePrefix: accountNamePrefix
     projectNameTag: projectNameTag
     projectEnvTag: projectEnvTag
   }

@@ -73,7 +73,7 @@ jobs:
     needs: [lint, validate, QA]
     env:
       AZUREREGION: westeurope
-      PREFIX: prod
+      PREFIX: ctt2026
     environment:
       name: Production
 
@@ -90,5 +90,7 @@ jobs:
           scope: subscription
           region: ${{ env.REGION }}
           deploymentName: ${{ github.run_number }}
-          template: ./06_multi_deployment/main-prod.bicep
-          parameters: azureRegion=${{ env.AZUREREGION }}
+          template: ./06_multi_deployment/main.bicep
+          parameters: 
+            azureRegion=${{ env.AZUREREGION }}
+            accountNamePrefix=${{ env.PREFIX }}
