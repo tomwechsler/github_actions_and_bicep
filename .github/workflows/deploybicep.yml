@@ -73,6 +73,7 @@ jobs:
     needs: [lint, validate, QA]
     env:
       AZUREREGION: westeurope
+      PREFIX: prod
     environment:
       name: Production
 
@@ -90,4 +91,6 @@ jobs:
           region: ${{ env.REGION }}
           deploymentName: ${{ github.run_number }}
           template: ./06_multi_deployment/main.bicep
-          parameters: azureRegion=${{ env.AZUREREGION }}
+          parameters: 
+            azureRegion=${{ env.AZUREREGION }}
+            accountNamePrefix=${{ env.PREFIX }}
