@@ -10,7 +10,7 @@ param projectEnvTag string
 
 param storageConfig object = {
   marketing: {
-    name: '${accountNamePrefix}markting'
+    name: '${accountNamePrefix}marketing'
     skuName: 'Standard_LRS'
   }
   accounting: {
